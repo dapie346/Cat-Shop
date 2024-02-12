@@ -6,9 +6,17 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "cat_list_74r77U": {
+      "type": "cat-list",
+      "settings": {
+        "cats-collection": "cats",
+        "cats-range": 3
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "cat_list_74r77U"
   ]
 }
