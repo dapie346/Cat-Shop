@@ -1,40 +1,47 @@
+{% assign display_custom_string = true %}
+
+{%- if product.metafields.cat.sex == blank or product.metafields.cat.age == blank 
+    or product.metafields.cat.color == blank or product.metafields.cat.breed == blank 
+    or product.metafields.cat.neutered == blank -%}
+  {% assign display_custom_string = false %}
+{%- endif -%}
+
 {% if product.metafields.cat.sex == "female" %}
-    {% assign pronoun = 'she'  %}
+  {% assign pronoun = 'she' %}
 {% else %}
-    {% assign pronoun = 'he'  %}
+  {% assign pronoun = 'he' %}
 {% endif %}
 
 {% if product.metafields.cat.age > 12 %}
-    {% assign years = product.metafields.cat.age | divided_by: 12 %}
-    {% if age > 0 %}
-        {% assign age = years | append: " years old" %}
-    {% else %}
-        {% assign age = years | append: " year old" %}
-    {% endif %}
+  {% assign years = product.metafields.cat.age | divided_by: 12 %}
+  {% assign age = years | append: " years old" %}
 {% else %}
-    {% assign age = product.metafields.cat.age | append: " months old" %}
+  {% assign age = product.metafields.cat.age | append: " months old" %}
 {% endif %}
 
 {% if product.metafields.cat.neutered %}
-    {% assign neutered = 'neutered' %}
+  {% assign neutered = 'neutered' %}
 {% else %}
-    {% assign neutered = 'not neutered' %}
+  {% assign neutered = 'not neutered' %}
 {% endif %}
 
 {% capture custom_string %}
-    Meet <strong>{{ product.title }}</strong>, {{ product.metafields.cat.color }} {{ product.metafields.cat.breed }} cat priced at just {{ product.price | money_without_trailing_zeros }}!
-    {{ pronoun | capitalize }}'s {{ age }} {{ neutered }} {{ product.metafields.cat.sex | downcase }}.
-    Now is the perfect time to bring a new friend home!
+  Meet <strong>{{ product.title }}</strong>, {{ product.metafields.cat.color }} {{ product.metafields.cat.breed }} 
+  cat priced at just {{ product.price | money_without_trailing_zeros }}!
+  {{ pronoun | capitalize }}'s {{ age }} and {{ neutered }} {{ product.metafields.cat.sex | downcase }}.
+  Now is the perfect time to bring a new friend home!
 {% endcapture %}
 
-
 <div>
-    {% if section.settings.custom_description != blank %}
-        {{ section.settings.custom_description }}
-    {% else %}
-        {{ custom_string }}
-    {% endif %}
+  {% if section.settings.custom_description != blank %}
+    {{ section.settings.custom_description }}
+  {% elsif display_custom_string %}
+    {{ custom_string }}
+  {% else %}
+    <p>More information about this cat will be coming soon!</p>
+  {% endif %}
 </div>
+
 
 
 {% schema %}

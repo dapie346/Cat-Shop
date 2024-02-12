@@ -11,7 +11,7 @@
             <h1>{{ product.title }}</h1>
             <img src="{{ product.featured_image | img_url: '400x300', crop: 'center' }}" alt="{{ product.title }}">
           </a>
-          <p>Breed: {{ product.metafields.cat.breed }}</p>
+      {% if product.metafields.cat.breed != blank %}<p>Breed: {{ product.metafields.cat.breed }}</p>{% endif %}
           <p>Price: {{ product.price | money_without_trailing_zeros }}</p>
         </div>
       {% endfor %}
