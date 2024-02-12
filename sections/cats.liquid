@@ -1,0 +1,41 @@
+<!-- Liquid loop to display products -->
+{% assign collection = collections[section.settings.cats-collection] %}
+
+{% if collection %}
+  {% for product in collection.products limit: section.settings.cats-range %}
+    <div class="cat-details">
+      <h1>{{ product.title }}</h1>
+      <img src="{{ product.featured_image | img_url: '450x450' }}" alt="{{ product.title }}">
+      <p>Breed: {{ product.metafields.cat.breed }}</p>
+      <p>Price: {{ product.price }}</p>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<!-- Section schema below -->
+{% schema %}
+{
+  "name": "Cat List",
+  "settings": [
+    {
+    "type": "collection",
+    "id": "cats-collection",
+    "label": "Collection with cats"
+    },
+    {
+      "type": "range",
+      "id": "cats-range",
+      "label": "Range of cats",
+      "min": 1,
+      "max": 13,
+      "step": 3,
+      "default": 4
+    }
+  ],
+  "presets": [
+      {
+          "name": "Cat List"
+      }
+  ]
+}
+{% endschema %}
