@@ -1,0 +1,72 @@
+{{ 'cat-list.css' | asset_url | stylesheet_tag }}
+
+{% assign collection = collections[section.settings.cats-collection] %}
+
+{% if collection %}
+  {% paginate collection.products by section.settings.cats-range %}
+    <div class="cat-list-container">
+      {% for product in collection.products %}
+        <div class="cat-item">
+          <a href="{{ product.url }}" style="text-decoration: none; color: inherit;">
+            <h1>{{ product.title }}</h1>
+            <img src="{{ product.featured_image | img_url: '400x300', crop: 'center' }}" alt="{{ product.title }}">
+          </a>
+          <p>Breed: {{ product.metafields.cat.breed }}</p>
+          <p>Price: {{ product.price | money_without_trailing_zeros }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  
+    {% if paginate.pages > 1 %}
+      <nav class="pagination-nav" aria-label="Page navigation">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        {% endif %}
+
+        {% for part in paginate.parts %}
+          {% if part.is_link %}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {% else %}
+            <span>{{ part.title }}</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% endpaginate %}
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Cat List",
+  "settings": [
+    {
+    "type": "collection",
+    "id": "cats-collection",
+    "label": "Collection of cats"
+    },
+    {
+      "type": "range",
+      "id": "cats-range",
+      "label": "Range of cats",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    }
+  ],
+  "presets": [
+      {
+          "name": "Cat List"
+      }
+  ]
+}
+{% endschema %}
