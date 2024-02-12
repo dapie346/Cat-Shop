@@ -14,14 +14,21 @@
     {% assign pronoun = 'he' %}
 {% endif %}
 
-{% assign ageNumber = product.metafields.cat.age %}
-{% assign isYears = ageNumber > 12 %}
-{% assign timeUnit = isYears %}
-{% assign divisor = isYears ? 12 : 1 %}
-{% assign ageValue = ageNumber | divided_by: divisor %}
-{% assign unit = isYears ? "year" : "month" %}
-{% assign plural = ageValue > 1 %}
-{% assign age = ageValue | append: " " | append: unit | append: plural ? "s" : "" | append: " old" %}
+{% assign age = product.metafields.cat.age %}
+{% if age > 12 %}
+    {% assign years = age | divided_by: 12 %}
+    {% assign ageString = years | append: " year" %}
+    {% if years > 1 %}
+        {% assign ageString = ageString | append: "s" %}
+    {% endif %}
+{% else %}
+    {% assign ageString = age | append: " month" %}
+    {% if age > 1 %}
+        {% assign ageString = ageString | append: "s" %}
+    {% endif %}
+{% endif %}
+{% assign ageString = ageString | append: " old" %}
+
 
 {% if product.metafields.cat.neutered %}
     {% assign neutered = 'neutered' %}
