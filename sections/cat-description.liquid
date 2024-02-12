@@ -1,0 +1,56 @@
+{% if product.metafields.cat.sex == "female" %}
+    {% assign pronoun = 'she'  %}
+{% else %}
+    {% assign pronoun = 'he'  %}
+{% endif %}
+
+{% if product.metafields.cat.age > 12 %}
+    {% assign years = product.metafields.cat.age | divided_by: 12 %}
+    {% if age > 0 %}
+        {% assign age = years | append: " years old" %}
+    {% else %}
+        {% assign age = years | append: " year old" %}
+    {% endif %}
+{% else %}
+    {% assign age = product.metafields.cat.age | append: " months old" %}
+{% endif %}
+
+{% if product.metafields.cat.neutered %}
+    {% assign neutered = 'neutered' %}
+{% else %}
+    {% assign neutered = 'not neutered' %}
+{% endif %}
+
+{% capture custom_string %}
+    Meet <strong>{{ product.title }}</strong>, {{ product.metafields.cat.color }} {{ product.metafields.cat.breed }} cat priced at just {{ product.price | money_without_trailing_zeros }}!
+    {{ pronoun | capitalize }}'s {{ age }} {{ neutered }} {{ product.metafields.cat.sex | downcase }}.
+    Now is the perfect time to bring a new friend home!
+{% endcapture %}
+
+
+<div>
+    {% if section.settings.custom_description != blank %}
+        {{ section.settings.custom_description }}
+    {% else %}
+        {{ custom_string }}
+    {% endif %}
+</div>
+
+
+{% schema %}
+    {
+        "name": "Cat Description",
+        "settings": [
+            {
+                "id": "custom_description",
+                "type": "text",
+                "label": "Custom Description"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Cat Description"
+            }
+        ]
+    }
+{% endschema %}    
