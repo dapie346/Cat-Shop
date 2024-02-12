@@ -1,0 +1,32 @@
+.cat-description .title strong {
+    font-weight: 600;
+}
+
+.cat-description .price {
+    color: #333;
+    font-weight: 500;
+}
+
+.cat-description .cta {
+    margin-top: 20px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.cat-description .fallback-message {
+    color: #757575;
+    font-style: italic;
+}
+
+.custom-cat-description {
+    text-align: justify;
+    margin: 20px auto;
+    padding: 15px;
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 800px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
